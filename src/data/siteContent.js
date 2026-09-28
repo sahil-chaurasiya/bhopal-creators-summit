@@ -388,10 +388,10 @@ export const siteSettings2026 = {
   ...siteSettings,
   eventName: 'Bhopal Creators Summit 2026',
   tagline: 'BCS IS BACK.',
-  date: 'DATE',
-  dateFull: 'To Be Announced',
-  venue: 'VENUE',
-  venueFull: 'To Be Announced',
+  date: '24 OCT',
+  dateFull: '24 October 2026',
+  venue: 'Taj Lakefront',
+  venueFull: 'Taj Lakefront, Bhopal',
   // Live ticketing link for the 2026 edition (eventman.live). Centralised here
   // so every 2026 CTA — navbar, hero, coming-soon, section CTAs, floating
   // button — points at the same place and only needs updating in one spot.
