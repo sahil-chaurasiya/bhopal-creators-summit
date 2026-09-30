@@ -1,4 +1,7 @@
+import { useRef } from 'react';
 import {
+  ChevronLeft,
+  ChevronRight,
   Bike,
   Music2,
   Paintbrush2,
@@ -18,13 +21,11 @@ import {
 import { activities2026 as fallbackActivities2026 } from '../data/siteContent';
 import useApiContent from '../hooks/useApiContent';
 
-// Static grid — no auto-scroll, nothing moving on its own, so every card is
-// readable at a glance. Each card gets a real image slot (same treatment as
-// the Competitions cards) so a photo uploaded from the admin panel actually
-// shows up, not just a small icon badge. Still visually its own thing:
-// smaller/denser cards, a single consistent accent, and a marigold eyebrow
-// to read as a distinct section from Competitions (flare/orange) and
-// Workshops (carousel).
+// Sliding card carousel — same treatment as the Competitions section above it
+// (scroll-snapped track, arrow buttons on desktop, native swipe on mobile,
+// identical card widths/gap so the two sections line up). Each card has a real
+// image slot so a photo uploaded from the admin panel shows up. A marigold
+// eyebrow keeps it visually distinct from Competitions (flare/orange).
 const iconBySlug = {
   'bike-rally': Bike,
   jamming: Music2,
@@ -53,7 +54,12 @@ function slugify(title) {
 }
 
 export default function Activities2026() {
+  const trackRef = useRef(null);
   const { data: activities } = useApiContent('/activities?year=2026', fallbackActivities2026);
+
+  const scrollBy = (dir) => {
+    trackRef.current?.scrollBy({ left: dir * 320, behavior: 'smooth' });
+  };
 
   if (!activities?.length) return null;
 
@@ -75,31 +81,62 @@ export default function Activities2026() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {activities.map((a) => {
-            const slug = a.slug || slugify(a.title);
-            const Icon = iconBySlug[slug] || Sparkles;
-            return (
-              <div key={a._id || a.title} className="flex flex-col">
-                <div className="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-panel to-ink">
-                  {a.coverImage?.url ? (
-                    <img
-                      src={a.coverImage.url}
-                      alt={a.coverImage.altText || a.title}
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <Icon size={32} strokeWidth={1.25} className="text-fog" />
-                  )}
-                </div>
-                <h3 className="mt-4 font-display text-base uppercase leading-tight text-bone">{a.title}</h3>
-                {a.hostedBy && <p className="mt-0.5 text-xs italic text-marigold">by {a.hostedBy}</p>}
-                {(a.copy || a.description) && (
-                  <p className="mt-1.5 text-xs leading-relaxed text-fog">{a.copy || a.description}</p>
-                )}
-              </div>
-            );
-          })}
+        <div className="relative mt-12">
+          <button
+            onClick={() => scrollBy(-1)}
+            aria-label="Previous activity"
+            className="focus-flare absolute left-3 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-bone text-ink shadow-lg shadow-black/40 transition-colors hover:bg-flare lg:flex"
+          >
+            <ChevronLeft size={26} />
+          </button>
+          <button
+            onClick={() => scrollBy(1)}
+            aria-label="Next activity"
+            className="focus-flare absolute right-3 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-bone text-ink shadow-lg shadow-black/40 transition-colors hover:bg-flare lg:flex"
+          >
+            <ChevronRight size={26} />
+          </button>
+
+          <div
+            ref={trackRef}
+            className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {activities.map((a) => {
+              const slug = a.slug || slugify(a.title);
+              const Icon = iconBySlug[slug] || Sparkles;
+              return (
+                <article
+                  key={a._id || a.title}
+                  className="flex h-auto w-[280px] shrink-0 snap-start flex-col sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-4.5rem)/4)]"
+                >
+                  {/* Every card gets the same 4:3 image box so all cards are
+                      identical in size. The activity artwork is landscape
+                      (4:3), so it fills the box without being cropped. */}
+                  <div className="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-panel to-ink">
+                    {a.coverImage?.url ? (
+                      <img
+                        src={a.coverImage.url}
+                        alt={a.coverImage.altText || a.title}
+                        className="h-full w-full object-cover object-center"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <Icon size={52} strokeWidth={1} className="text-fog" />
+                    )}
+                  </div>
+                  <div className="flex flex-1 flex-col">
+                    <h3 className="mt-6 font-display text-2xl uppercase text-bone">{a.title}</h3>
+                    {a.hostedBy && <p className="mt-1 text-xs italic text-marigold">by {a.hostedBy}</p>}
+                    {(a.copy || a.description) && (
+                      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-fog">
+                        {a.copy || a.description}
+                      </p>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

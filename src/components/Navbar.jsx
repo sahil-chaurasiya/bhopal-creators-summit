@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, Ticket, X } from 'lucide-react';
+import { ChevronDown, Menu, Ticket, X } from 'lucide-react';
 import Button from './Button';
 import {
   navLinks as navLinksFallback,
@@ -37,6 +37,28 @@ function NavAnchor({ href, basePath, className, onClick, children }) {
   );
 }
 
+// Season-related anchors are grouped under a single "Program" dropdown on the
+// desktop nav so the top level stays at 6 items instead of 10+. The mobile
+// menu still lists every link flat.
+const PROGRAM_LABELS = ['Season', 'Challenges', 'Competitions', 'Activities', 'Community'];
+
+function groupDesktopLinks(links) {
+  const out = [];
+  let group = null;
+  links.forEach((link) => {
+    if (PROGRAM_LABELS.includes(link.label)) {
+      if (!group) {
+        group = { type: 'group', label: 'Program', items: [] };
+        out.push(group);
+      }
+      group.items.push(link);
+    } else {
+      out.push({ type: 'link', ...link });
+    }
+  });
+  return out;
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -54,6 +76,9 @@ export default function Navbar() {
   // whatever is currently saved in the database.
   const { data: settings } = useApiContent('/settings', siteSettings, 'settings');
   const navLinks = isLegacy2025 ? navLinks2025Fallback : navLinksFallback;
+  const desktopLinks = isLegacy2025
+    ? navLinks.map((l) => ({ type: 'link', ...l }))
+    : groupDesktopLinks(navLinks);
   const eventName = isLegacy2025
     ? settings?.eventName || siteSettings.eventName
     : siteSettings2026.eventName;
@@ -79,17 +104,45 @@ export default function Navbar() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-5 xl:flex">
-          {navLinks.map((link) => (
-            <NavAnchor
-              key={link.label}
-              href={link.href}
-              basePath={basePath}
-              className="focus-flare whitespace-nowrap text-sm font-semibold text-bone/90 transition-colors hover:text-flare"
-            >
-              {link.label}
-            </NavAnchor>
-          ))}
+        <nav className="hidden items-center gap-6 xl:flex">
+          {desktopLinks.map((item) =>
+            item.type === 'group' ? (
+              <div key={item.label} className="group relative">
+                <button
+                  type="button"
+                  aria-haspopup="true"
+                  className="focus-flare inline-flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-bone/90 transition-colors hover:text-flare group-focus-within:text-flare"
+                >
+                  {item.label}
+                  <ChevronDown size={14} className="transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
+                </button>
+                <div className="absolute left-1/2 top-full z-50 hidden -translate-x-1/2 pt-3 group-focus-within:block group-hover:block">
+                  <div className="min-w-[190px] rounded-xl border border-panel-line bg-ink p-2 shadow-xl">
+                    {item.items.map((sub) => (
+                      <NavAnchor
+                        key={sub.label}
+                        href={sub.href}
+                        basePath={basePath}
+                        onClick={(e) => e.currentTarget.blur()}
+                        className="focus-flare block whitespace-nowrap rounded-md px-3 py-2 text-sm font-semibold text-bone/90 transition-colors hover:bg-panel hover:text-flare"
+                      >
+                        {sub.label}
+                      </NavAnchor>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <NavAnchor
+                key={item.label}
+                href={item.href}
+                basePath={basePath}
+                className="focus-flare whitespace-nowrap text-sm font-semibold text-bone/90 transition-colors hover:text-flare"
+              >
+                {item.label}
+              </NavAnchor>
+            )
+          )}
         </nav>
 
         <div className="hidden items-center gap-6 xl:flex">

@@ -11,7 +11,7 @@ export default function TicketFloatingCTA() {
       href={siteSettings2026.ticketUrl}
       target="_blank"
       rel="noreferrer"
-      className="focus-flare fixed bottom-5 right-5 z-40 flex items-center gap-2 rounded-full bg-flare px-5 py-3 text-sm font-bold text-ink shadow-lg shadow-ink/40 transition-colors hover:bg-flare-hot sm:bottom-7 sm:right-7"
+      className="focus-flare fixed bottom-5 right-5 z-40 flex items-center gap-2 rounded-full bg-flare px-7 py-3 text-sm font-bold tracking-wide text-ink shadow-lg shadow-ink/40 transition-colors hover:bg-flare-hot sm:bottom-7 sm:right-7"
     >
       <Ticket size={17} />
       Get Tickets

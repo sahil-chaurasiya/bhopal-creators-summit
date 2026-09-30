@@ -69,19 +69,25 @@ export default function Footer() {
     settings?.footerAbout ||
     "The Bhopal Creators Summit brings India\u2019s creative minds together in the heart of Madhya Pradesh. Fueled by digital ambition and cultural roots, it\u2019s more than a SUMMIT\u2014it\u2019s a MOVEMENT.";
   const links = settings?.footerLinks?.length ? settings.footerLinks : footerLinks;
+  // Legal/policy links live in the bottom bar; the "Links" column keeps only
+  // the primary site navigation.
+  const legalHrefs = ['/privacy-policy', '/terms', '/shipping-policy'];
+  const allLinks = links;
+  const navFooterLinks = allLinks.filter((l) => !legalHrefs.includes(l.href));
+  const legalLinks = allLinks.filter((l) => legalHrefs.includes(l.href));
 
   return (
     <footer id="contact" className="bg-charcoal px-5 pb-8 pt-16 sm:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
           <div>
+            <h3 className="font-display text-base uppercase text-bone">About the Summit</h3>
+            <p className="mt-5 text-sm leading-relaxed text-fog">{aboutCopy}</p>
             <img
               src="/i-am-a-bhopali-creator-2025.webp"
               alt="iAMA Bhopali Creator - Bhopal Creators Summit"
-              className="h-14 w-auto object-contain"
+              className="mt-5 h-14 w-auto object-contain"
             />
-            <h3 className="mt-5 font-display text-base uppercase text-bone">All Rounder Services</h3>
-            <p className="mt-3 text-sm leading-relaxed text-fog">{aboutCopy}</p>
           </div>
 
           <div>
@@ -111,7 +117,7 @@ export default function Footer() {
           <div>
             <h3 className="font-display text-base uppercase text-bone">Links</h3>
             <ul className="mt-5 space-y-3 text-sm text-fog">
-              {links.map((l) => (
+              {navFooterLinks.map((l) => (
                 <li key={l.label}>
                   {l.href.startsWith('/') ? (
                     <Link to={l.href} className="focus-flare hover:text-flare">
@@ -129,11 +135,11 @@ export default function Footer() {
 
           <div>
             <h3 className="font-display text-base uppercase text-bone">Get in Touch</h3>
-            <p className="mt-5 text-sm text-fog">
+            <p className="mt-5 text-sm leading-relaxed text-fog">
               Follow along and reach out&mdash;we reply fast during summit season.
             </p>
             {socialLinks.length > 0 && (
-              <div className="mt-5 flex flex-wrap gap-3">
+              <div className="mt-4 flex flex-wrap gap-3">
                 {socialLinks.map((s) => {
                   const Glyph = socialGlyphs[s.platform?.toLowerCase()] || InstagramGlyph;
                   return (
@@ -155,7 +161,20 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col gap-4 border-t border-panel-line pt-6 text-xs text-fog sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; {new Date().getFullYear()}. All Rights Reserved.</p>
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6">
+            <p>&copy; {new Date().getFullYear()}. All Rights Reserved.</p>
+            {legalLinks.length > 0 && (
+              <ul className="flex flex-wrap gap-x-5 gap-y-2">
+                {legalLinks.map((l) => (
+                  <li key={l.label}>
+                    <Link to={l.href} className="focus-flare hover:text-flare">
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
           <p>
             Site designed &amp; Managed by:{' '}
             <a href="https://toflymediaa.com/" target="_blank" rel="noreferrer" className="focus-flare font-semibold text-bone hover:text-flare">

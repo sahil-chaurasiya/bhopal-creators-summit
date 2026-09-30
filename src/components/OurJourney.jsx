@@ -94,7 +94,7 @@ export default function OurJourney() {
               </p>
             </div>
             <span className="mt-6 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-marigold">
-              Get Your Tickets <ArrowRight size={14} />
+              Get Tickets <ArrowRight size={14} />
             </span>
           </a>
         </div>

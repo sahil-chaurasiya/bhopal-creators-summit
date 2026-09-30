@@ -34,7 +34,7 @@ function ProfileMeta({ p, size = 'md' }) {
         </div>
       )}
       <div className="min-w-0">
-        <h3 className="truncate font-display text-lg uppercase text-bone">{p.name}</h3>
+        <h3 className="truncate font-display text-xl uppercase text-bone">{p.name}</h3>
         {p.role && <p className="truncate text-xs font-semibold text-flare">{p.role}</p>}
         {(p.handle || p.followers) && (
           <p className="mt-0.5 flex items-center gap-1 truncate text-xs text-fog">
@@ -116,6 +116,22 @@ export default function KeyInfluencers2026() {
   const trackRef = useRef(null);
   const [active, setActive] = useState(0);
   const [expanded, setExpanded] = useState(null);
+  // Carousel controls are only useful when the cards overflow the track.
+  const [overflowing, setOverflowing] = useState(false);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return undefined;
+    const check = () => setOverflowing(track.scrollWidth > track.clientWidth + 4);
+    check();
+    const ro = new ResizeObserver(check);
+    ro.observe(track);
+    window.addEventListener('resize', check);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', check);
+    };
+  }, [list.length]);
 
   const scrollToIndex = (i) => {
     const track = trackRef.current;
@@ -157,26 +173,6 @@ export default function KeyInfluencers2026() {
             </h2>
           </div>
 
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => scrollToIndex(Math.max(0, active - 1))}
-              disabled={active === 0}
-              aria-label="Previous influencer"
-              className="focus-flare flex h-11 w-11 items-center justify-center rounded-full border border-panel-line text-bone transition-colors hover:border-flare hover:text-flare disabled:opacity-30"
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToIndex(Math.min(list.length - 1, active + 1))}
-              disabled={active === list.length - 1}
-              aria-label="Next influencer"
-              className="focus-flare flex h-11 w-11 items-center justify-center rounded-full border border-panel-line text-bone transition-colors hover:border-flare hover:text-flare disabled:opacity-30"
-            >
-              <ArrowRight size={18} />
-            </button>
-          </div>
         </div>
 
         <div
@@ -202,9 +198,10 @@ export default function KeyInfluencers2026() {
                       <button
                         type="button"
                         onClick={() => setExpanded(p)}
-                        className="focus-flare mt-3 self-start text-xs font-bold uppercase tracking-wide text-flare hover:text-flare-hot"
+                        className="focus-flare mt-3 inline-flex min-h-[44px] items-center gap-1.5 self-start rounded-full border border-flare/40 px-4 py-2 text-xs font-bold uppercase tracking-wide text-flare transition-colors hover:border-flare hover:bg-flare/10 hover:text-flare-hot"
                       >
                         Read more
+                        <ArrowRight size={14} aria-hidden />
                       </button>
                     )}
                   </>
@@ -214,19 +211,48 @@ export default function KeyInfluencers2026() {
           })}
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-2">
-          {list.map((p, i) => (
-            <button
-              key={p.name ?? i}
-              type="button"
-              onClick={() => scrollToIndex(i)}
-              aria-label={`Go to ${p.name}`}
-              className={`h-1.5 rounded-full transition-all ${
-                i === active ? 'w-6 bg-flare' : 'w-1.5 bg-panel-line'
-              }`}
-            />
-          ))}
+        {overflowing && (
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => scrollToIndex(Math.max(0, active - 1))}
+            disabled={active === 0}
+            aria-label="Previous influencer"
+            className="focus-flare flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-bone text-ink shadow-lg shadow-black/40 transition-colors hover:bg-flare disabled:opacity-30"
+          >
+            <ArrowLeft size={18} />
+          </button>
+
+          <div className="flex flex-wrap items-center justify-center">
+            {list.map((p, i) => (
+              <button
+                key={p.name ?? i}
+                type="button"
+                onClick={() => scrollToIndex(i)}
+                aria-label={`Go to ${p.name}`}
+                aria-current={i === active ? 'true' : undefined}
+                className="focus-flare group flex h-6 items-center justify-center px-1"
+              >
+                <span
+                  className={`block h-2.5 rounded-full transition-all group-hover:bg-flare ${
+                    i === active ? 'w-7 bg-flare' : 'w-2.5 bg-fog/60'
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => scrollToIndex(Math.min(list.length - 1, active + 1))}
+            disabled={active === list.length - 1}
+            aria-label="Next influencer"
+            className="focus-flare flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-bone text-ink shadow-lg shadow-black/40 transition-colors hover:bg-flare disabled:opacity-30"
+          >
+            <ArrowRight size={18} />
+          </button>
         </div>
+        )}
       </div>
 
       <ProfileModal person={expanded} onClose={() => setExpanded(null)} />

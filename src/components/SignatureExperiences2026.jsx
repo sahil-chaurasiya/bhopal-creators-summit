@@ -23,7 +23,7 @@ export default function SignatureExperiences2026() {
         <div className="mt-10 flex justify-center">
           <Button href={siteSettings2026.ticketUrl} target="_blank" rel="noreferrer" variant="outline" className="gap-2">
             <Ticket size={16} />
-            Secure Your Spot
+            Get Tickets
           </Button>
         </div>
       </div>

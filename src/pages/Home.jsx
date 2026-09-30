@@ -18,6 +18,7 @@ import OurJourney from '../components/OurJourney';
 import ComingSoon2026 from '../components/ComingSoon2026';
 import InstagramCTA from '../components/InstagramCTA';
 import TicketFloatingCTA from '../components/TicketFloatingCTA';
+import SectionJumpNav from '../components/SectionJumpNav';
 
 // Default homepage ("/") — the 2026 edition. The 2025 site lives, unmodified,
 // at /2025 via Home2025.jsx.
@@ -49,6 +50,7 @@ export default function Home() {
       <ComingSoon2026 />
       <InstagramCTA />
       <TicketFloatingCTA />
+      <SectionJumpNav />
     </>
   );
 }

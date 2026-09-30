@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { Camera, UtensilsCrossed, Gamepad2, Film, Compass, Bot, Music2, ChevronLeft, ChevronRight } from 'lucide-react';
-import Button from './Button';
-import { competitions2026 as fallbackCompetitions2026, siteSettings2026 } from '../data/siteContent';
+import { competitions2026 as fallbackCompetitions2026 } from '../data/siteContent';
 import useApiContent from '../hooks/useApiContent';
 
 const iconBySlug = {
@@ -47,16 +46,16 @@ export default function Competitions2026() {
           <button
             onClick={() => scrollBy(-1)}
             aria-label="Previous competition"
-            className="focus-flare absolute left-0 top-1/2 z-10 hidden -translate-x-4 -translate-y-1/2 rounded-full bg-panel/90 p-2 text-bone hover:text-flare lg:flex"
+            className="focus-flare absolute left-3 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-bone text-ink shadow-lg shadow-black/40 transition-colors hover:bg-flare lg:flex"
           >
-            <ChevronLeft size={22} />
+            <ChevronLeft size={26} />
           </button>
           <button
             onClick={() => scrollBy(1)}
             aria-label="Next competition"
-            className="focus-flare absolute right-0 top-1/2 z-10 hidden -translate-y-1/2 translate-x-4 rounded-full bg-panel/90 p-2 text-bone hover:text-flare lg:flex"
+            className="focus-flare absolute right-3 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-bone text-ink shadow-lg shadow-black/40 transition-colors hover:bg-flare lg:flex"
           >
-            <ChevronRight size={22} />
+            <ChevronRight size={26} />
           </button>
 
           <div
@@ -68,7 +67,7 @@ export default function Competitions2026() {
               return (
                 <article
                   key={c._id || c.slug}
-                  className="flex h-auto w-[280px] shrink-0 snap-start flex-col"
+                  className="flex h-auto w-[280px] shrink-0 snap-start flex-col sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-4.5rem)/4)]"
                 >
                   <div className="flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-panel to-charcoal">
                     {c.coverImage?.url ? (
@@ -87,18 +86,6 @@ export default function Competitions2026() {
                       {c.copy || c.shortDescription}
                     </p>
                   </div>
-                  {/* Every competition registers through the same live event
-                      ticket link — no standalone /competitions/:slug page
-                      needed. A competition can still override with its own
-                      registerUrl if one is ever set from the admin panel. */}
-                  <Button
-                    href={c.registerUrl || siteSettings2026.ticketUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-6 self-start"
-                  >
-                    Register Now
-                  </Button>
                 </article>
               );
             })}

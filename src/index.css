@@ -34,6 +34,53 @@ body {
   color: var(--color-ink);
 }
 
+/* Site-wide themed scrollbars: slim, dark track with a flare-gradient thumb.
+   Applies to the page and every scrollable element (menus, modals, etc.).
+   Elements that deliberately hide their scrollbar (carousels) or use the
+   .admin-scroll style below keep doing so — their own rules are more specific. */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-flare-hot), var(--color-flare) 55%, var(--color-magenta));
+  border-radius: 9999px;
+  /* Inset look: a track-coloured border makes the thumb float inside the track */
+  border: 2px solid var(--color-ink);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--color-marigold), var(--color-flare-hot) 50%, var(--color-flare));
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: var(--color-flare-hot);
+}
+
+*::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+*::-webkit-scrollbar-corner {
+  background: var(--color-ink);
+}
+
+/* Firefox (and any browser without ::-webkit-scrollbar) — only applied there,
+   because in Chromium scrollbar-color would override the styling above. */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-flare) var(--color-ink);
+  }
+}
+
 /* Slim, dark themed scrollbar for the admin panel */
 .admin-scroll {
   scrollbar-width: thin;

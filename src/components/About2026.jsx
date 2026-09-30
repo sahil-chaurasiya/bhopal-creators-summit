@@ -55,7 +55,7 @@ export default function About2026() {
               />
             ) : (
               <div className="flex h-full w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-panel-line text-center">
-                <p className="font-display text-lg uppercase tracking-wide text-fog">Photos &amp; Video</p>
+                <p className="font-display text-xl uppercase tracking-wide text-fog">Photos &amp; Video</p>
                 <p className="font-mono text-xs uppercase tracking-[0.25em] text-flare">Coming Soon</p>
               </div>
             )}
@@ -67,7 +67,7 @@ export default function About2026() {
           <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.25em] text-flare">
             {about.eyebrow}
           </p>
-          <h2 className="font-display text-4xl uppercase leading-[0.95] text-bone sm:text-5xl">
+          <h2 className="font-display text-4xl normal-case leading-[0.95] text-bone sm:text-5xl">
             {about.title}
           </h2>
 
@@ -86,7 +86,7 @@ export default function About2026() {
                 <div key={h.title} className="flex gap-4">
                   <Icon className="mt-1 shrink-0 text-flare" size={26} strokeWidth={1.5} />
                   <div>
-                    <h3 className="font-display text-lg uppercase tracking-wide text-bone">{h.title}</h3>
+                    <h3 className="font-display text-xl normal-case tracking-wide text-bone">{h.title}</h3>
                     <p className="mt-1 text-sm leading-relaxed text-fog">{h.copy}</p>
                   </div>
                 </div>

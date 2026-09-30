@@ -24,7 +24,7 @@ export default function SponsorCTA() {
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-flare">
                 Creator Season 2026
               </p>
-              <h3 className="mt-1 font-display text-2xl uppercase leading-tight text-bone sm:text-3xl">
+              <h3 className="mt-1 font-display text-2xl uppercase leading-tight text-bone">
                 Partner With the Summit
               </h3>
               <p className="mt-2 max-w-xl text-sm text-fog">
@@ -35,7 +35,7 @@ export default function SponsorCTA() {
             </div>
           </div>
 
-          <span className="relative inline-flex shrink-0 items-center gap-2 rounded-full bg-flare px-6 py-3 text-sm font-bold text-ink transition-colors group-hover:bg-flare-hot">
+          <span className="relative inline-flex shrink-0 items-center gap-2 rounded-full bg-flare px-7 py-3 text-sm font-bold tracking-wide text-ink transition-colors group-hover:bg-flare-hot">
             View Sponsorship Details
             <ArrowUpRight size={18} />
           </span>

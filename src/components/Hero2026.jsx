@@ -36,7 +36,7 @@ export default function Hero2026() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
-          <p className="font-mono text-xs font-semibold uppercase tracking-[0.3em] text-flare">
+          <p className="font-mono text-xs font-semibold normal-case tracking-[0.15em] text-flare">
             Bhopal Creators Summit
           </p>
           <h1 className="mt-3 font-display text-6xl uppercase leading-[0.92] text-bone sm:text-8xl">
@@ -52,11 +52,11 @@ export default function Hero2026() {
         >
           <div>
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-flare">Date</p>
-            <p className="mt-1 font-display text-2xl uppercase text-bone sm:text-3xl">{settings.dateFull}</p>
+            <p className="mt-1 font-display text-2xl normal-case text-bone">{settings.dateFull}</p>
           </div>
           <div>
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-flare">Venue</p>
-            <p className="mt-1 font-display text-2xl uppercase text-bone sm:text-3xl">{settings.venueFull}</p>
+            <p className="mt-1 font-display text-2xl normal-case text-bone">{settings.venueFull}</p>
           </div>
         </motion.div>
 

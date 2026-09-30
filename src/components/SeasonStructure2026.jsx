@@ -13,7 +13,7 @@ export default function SeasonStructure2026() {
           {s.phases.map((phase) => (
             <div key={phase.number} className="rounded-2xl border border-panel-line bg-panel p-6">
               <p className="font-display text-4xl text-flare">{phase.number}</p>
-              <h3 className="mt-2 font-display text-lg uppercase leading-tight text-bone">{phase.title}</h3>
+              <h3 className="mt-2 font-display text-xl normal-case leading-tight text-bone">{phase.title}</h3>
               <span className="mt-3 inline-block rounded-full bg-flare px-4 py-1 text-xs font-bold text-ink">
                 {phase.days}
               </span>

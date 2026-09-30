@@ -13,21 +13,19 @@ export default function CreatorAwards2026() {
           <p className="mx-auto mt-5 max-w-2xl text-fog">{a.intro}</p>
         </div>
 
-        <div className="mt-10 grid gap-3 sm:grid-cols-2">
+        <ul className="mt-10 grid gap-x-8 gap-y-4 sm:grid-cols-2">
           {a.categories.map((cat) => (
-            <div
-              key={cat}
-              className="rounded-lg border border-panel-line bg-panel px-5 py-3 text-sm font-semibold text-bone"
-            >
+            <li key={cat} className="flex items-center gap-3 text-sm font-semibold text-bone">
+              <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-flare" />
               {cat}
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
 
         <div className="mt-10 text-center">
           <Button href={siteSettings2026.ticketUrl} target="_blank" rel="noreferrer" variant="flare" className="gap-2">
             <Ticket size={16} />
-            Get Your Tickets to the Awards
+            Get Tickets
           </Button>
         </div>
       </div>

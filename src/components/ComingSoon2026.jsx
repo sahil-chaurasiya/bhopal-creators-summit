@@ -24,7 +24,7 @@ export default function ComingSoon2026() {
           <Sparkles size={14} /> {comingSoon2026.eyebrow}
         </p>
 
-        <h2 className="mt-6 font-display text-5xl uppercase leading-[0.95] text-bone sm:text-6xl lg:text-7xl">
+        <h2 className="mt-6 font-display text-5xl uppercase leading-[0.95] text-bone sm:text-6xl">
           {comingSoon2026.title}
         </h2>
 
@@ -39,7 +39,7 @@ export default function ComingSoon2026() {
             className="gap-2"
           >
             <Ticket size={16} />
-            Get Your Tickets
+            Get Tickets
           </Button>
           <Button href={comingSoon2026.notifyHref} target="_blank" rel="noreferrer" variant="outline">
             {comingSoon2026.notifyLabel}

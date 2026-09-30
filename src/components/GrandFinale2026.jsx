@@ -11,22 +11,20 @@ export default function GrandFinale2026() {
         <h2 className="font-display text-4xl uppercase leading-[0.95] text-bone sm:text-5xl">{g.title}</h2>
         <p className="mt-5 max-w-2xl text-fog">{g.intro}</p>
 
-        <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <ul className="mt-12 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
           {g.items.map((item) => (
-            <div
-              key={item}
-              className="rounded-lg border border-panel-line bg-panel px-4 py-4 text-center text-sm font-semibold text-bone"
-            >
+            <li key={item} className="flex items-center gap-3 text-sm font-semibold text-bone">
+              <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-flare" />
               {item}
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
 
         <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
           <p className="text-sm text-fog">Don&rsquo;t watch the finale from the outside.</p>
           <Button href={siteSettings2026.ticketUrl} target="_blank" rel="noreferrer" variant="flare" className="gap-2">
             <Ticket size={16} />
-            Get Your Tickets
+            Get Tickets
           </Button>
         </div>
       </div>
