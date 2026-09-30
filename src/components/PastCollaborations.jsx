@@ -1,23 +1,3 @@
-const logos = [
-  { name: 'Canon', logo: { url: '/past-collaborations/canon.png' } },
-  { name: 'Snapchat', logo: { url: '/past-collaborations/snapchat.jpg' } },
-  { name: 'IndiGo', logo: { url: '/past-collaborations/indigo.png' } },
-  { name: 'Madhya Pradesh Tourism', logo: { url: '/past-collaborations/mp-tourism.png' } },
-  { name: 'Pandav Hotels', logo: { url: '/past-collaborations/pandav-hotels.jpg' } },
-  { name: 'OM System', logo: { url: '/past-collaborations/om-system.png' } },
-  { name: 'Lucia', logo: { url: '/past-collaborations/lucia.png' } },
-  { name: 'BNI Bhopal', logo: { url: '/past-collaborations/bni-bhopal.jpg' } },
-  { name: 'SAM Global University', logo: { url: '/past-collaborations/sam-global-university.jpg' } },
-];
-
-function LogoCard({ s }) {
-  return (
-    <div className="flex h-20 items-center justify-center rounded-xl bg-bone p-4 sm:h-24">
-      <img src={s.logo.url} alt={s.name} className="h-full w-full object-contain" loading="lazy" />
-    </div>
-  );
-}
-
 export default function PastCollaborations() {
   return (
     <div className="grid gap-10 pb-10 lg:grid-cols-2 lg:items-center lg:gap-14 lg:pb-14">
@@ -46,12 +26,15 @@ export default function PastCollaborations() {
         </p>
       </div>
 
-      <div className="rounded-2xl border border-flare/30 bg-gradient-to-br from-marigold/50 via-flare/40 to-magenta/50 p-3 sm:p-4">
-        <div className="grid grid-cols-2 gap-3 sm:gap-4">
-          {logos.map((s) => (
-            <LogoCard key={s.name} s={s} />
-          ))}
-        </div>
+      <div className="mx-auto w-full max-w-md sm:max-w-lg">
+        <img
+          src="/past-collaborations/2025-sponsors.webp"
+          alt="BCS 2025 sponsors and partners: Canon, Snapchat, IndiGo, Madhya Pradesh Tourism, Pandav Hotels, OM System, Lucia, BNI Bhopal and SAM Global University"
+          width="1200"
+          height="1573"
+          className="block h-auto w-full"
+          loading="lazy"
+        />
       </div>
     </div>
   );
